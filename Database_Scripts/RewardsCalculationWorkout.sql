@@ -12,32 +12,49 @@ WITH MonthsCTE AS (
 --customerdata holds the data from Customers, Orders and OrderDetails
 --based on the list of start and end ranges available
 CustomerData as (
-    SELECT cus.CustomerId, cus.CustomerName, cus.ContactName, cte.MonthStart, cte.MonthEnd, Sum(orddet.UnitPrice * orddet.Quantity) as Total 
-    FROM MonthsCTE cte,
-        Customers cus,
-	    Orders ord,
-	    OrderDetails orddet
+    SELECT  cus.CustomerId, 
+            cus.CustomerName, 
+            cus.ContactName, 
+            ord.OrderId, 
+            ord.OrderDate,
+            SUM(CASE WHEN (ord.TotalPrice - 100) > 0 
+                THEN ((ord.TotalPrice - 100) * 2) 
+                ELSE 0
+            END +
+            CASE WHEN (ord.TotalPrice - 50) > 0 
+                --THEN CAST(FLOOR((ord.TotalPrice - 50) / 50) as float) * 50
+                THEN 50
+                ELSE 0
+            END)
+            as Rewards
+            --SUM(CASE WHEN (ord.TotalPrice - 100) > 0 
+            --    THEN ((ord.TotalPrice - 100) * 2) 
+            --    ELSE 0
+            --END) as RewardsLHS,
+            --SUM(CASE WHEN (ord.TotalPrice - 50) > 0 
+            --    THEN CAST(FLOOR((ord.TotalPrice - 50) / 50) as float) * 50
+            --    ELSE 0
+            --END) as RewardsRHS
+            
+    --FROM MonthsCTE cte,
+    FROM    Customers cus,
+	        Orders ord
     where cus.CustomerId = ord.CustomerId
-    and ord.OrderId = orddet.OrderId
-    and ord.OrderDate between cte.MonthStart and cte.MonthEnd
-    Group By cus.CustomerId, cus.CustomerName, cus.ContactName, cte.MonthStart, cte.MonthEnd
+    Group By cus.CustomerId, cus.CustomerName, cus.ContactName, ord.OrderId, ord.OrderDate
     )
-SELECT  CustomerId, 
-        CustomerName, 
-        ContactName, 
-        MonthStart, 
-        MonthEnd, 
-        Total, 
-        ((Total - 100) * 2) + CAST(FLOOR((Total - 50) / 50) as float) * 50 as Rewards,
-        ((Total - 100) * 2) as RewardsLHS,
-        CAST(FLOOR((Total - 50) / 50) as float) * 50 as RewardsRHS
-FROM    CustomerData;
---SELECT cus.CustomerId, cus.CustomerName, cus.ContactName, cte.MonthStart, cte.MonthEnd, Sum(orddet.UnitPrice * orddet.Quantity) as Total 
---FROM MonthsCTE cte,F
---    Customers cus,
---	Orders ord,
---	OrderDetails orddet
---where cus.CustomerId = ord.CustomerId
---and ord.OrderId = orddet.OrderId
---and ord.OrderDate between cte.MonthStart and cte.MonthEnd
---Group By cus.CustomerId, cus.CustomerName, cus.ContactName, cte.MonthStart, cte.MonthEnd
+SELECT  cus.CustomerId, 
+        cus.CustomerName, 
+        cus.ContactName, 
+        cte.MonthStart, 
+        cte.MonthEnd, 
+        Sum(ord.TotalPrice) as Total, 
+        Sum(Rewards) as TotalRewards
+        --Sum(RewardsLHS) as TotalRewardsLHS,
+        --Sum(RewardsRHS) as TotalRewardsRHS
+FROM    CustomerData cus,
+        Orders ord,
+        MonthsCTE cte
+where   cus.OrderDate between cte.MonthStart and cte.MonthEnd
+and     ord.CustomerId = cus.CustomerId
+and     ord.OrderDate = cus.OrderDate
+Group by cus.CustomerId, cus.CustomerName, cus.ContactName, cte.MonthStart, cte.MonthEnd;
