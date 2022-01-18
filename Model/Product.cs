@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RetailerProgram.Model
 {
+    /// <summary>
+    /// This object represents the Products table in RetailerRewards database
+    /// </summary>
     internal class Product
     {
         public int ProductId { get; set; }

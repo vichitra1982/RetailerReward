@@ -81,6 +81,8 @@
     <Content Include="Database_Scripts\dbo.OrderDetails.sql" />
     <Content Include="Database_Scripts\dbo.Orders.sql" />
     <Content Include="Database_Scripts\dbo.Products.sql" />
+    <Content Include="Database_Scripts\Insert Scripts for RetailerRewards database.sql" />
+    <Content Include="Database_Scripts\RewardsCalculationWorkout.sql" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
