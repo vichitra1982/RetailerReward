@@ -1,4 +1,11 @@
-﻿INSERT "Customers" VALUES (1,'Albers Inc','Sarah Moanees','821 Annadale St.','Powder Springs','GA','USA','30127');
+﻿Begin Tran RetailerDataImport
+
+delete from orderdetails;
+delete from orders;
+delete from customers;
+delete from products;
+
+INSERT "Customers" VALUES (1,'Albers Inc','Sarah Moanees','821 Annadale St.','Powder Springs','GA','USA','30127');
 INSERT "Customers" VALUES (2,'Total Access Corp','Perry Tonitus','999 Lafayette St.','Stamford','CT','Germany','06902');
 INSERT "Customers" VALUES (3,'Binders Inc','Gene Therapee','260 Court Court','Chevy Chase','MD','Mexico','20815');
 INSERT "Customers" VALUES (4,'Abc Corp','Di Allysis','588 Oxford St.','Cambridge','MA','Swden','02138');
@@ -8,7 +15,7 @@ INSERT "Customers" VALUES (7,'Stanley Corp','Ralph and Alice Kramden','54 Pierce
 INSERT "Customers" VALUES (8,'Metallic Inc','Holly Golightly','9793 Green Hill Street','East Brunswick','NJ','Argentina','08816');
 INSERT "Customers" VALUES (9,'Broadway Inc','Liza Doolittle','6 E. Williams Street','Grosse Pointe','MI','Spain','48236');
 INSERT "Customers" VALUES (10,'Microsoft','Henry Higgins','9490 Brickyard Ave.','Clifton','NJ','Portugal','07011');
-select count(customerid) from Customers;
+select count(customerid) as customerCount from Customers;
 INSERT "Products" VALUES (1,'Product 1',18,39,10,0);
 INSERT "Products" VALUES (2,'Product 2',19,17,25,0);
 INSERT "Products" VALUES (3,'Product 3',10,13,25,0);
@@ -86,7 +93,7 @@ INSERT "Products" VALUES (74,'Product 74',10,4,5,0);
 INSERT "Products" VALUES (75,'Product 75',7.75,125,25,0);
 INSERT "Products" VALUES (76,'Product 76',18,57,20,0);
 INSERT "Products" VALUES (77,'Product 77',13,32,15,0);
-Select count(productid) from Products;
+Select count(productid) as productCount from Products;
 INSERT "Orders" VALUES(1,'01/01/2021 00:00:00',10,'01/15/2021 00:00:00','01/13/2021 00:00:00','9490 Brickyard Ave.',NULL,'Clifton','NJ','07011');
 INSERT "Orders" VALUES(2,'01/02/2021 00:00:00',10,'01/16/2021 00:00:00','01/14/2021 00:00:00','9490 Brickyard Ave.',NULL,'Clifton','NJ','07011');
 INSERT "Orders" VALUES(3,'01/03/2021 00:00:00',10,'01/17/2021 00:00:00','01/15/2021 00:00:00','9490 Brickyard Ave.',NULL,'Clifton','NJ','07011');
@@ -447,7 +454,7 @@ INSERT "Orders" VALUES(357,'03/28/2021 00:00:00',6,'04/11/2021 00:00:00','04/09/
 INSERT "Orders" VALUES(358,'03/29/2021 00:00:00',6,'04/12/2021 00:00:00','04/10/2021 00:00:00','9667 Anderson Drive',NULL,'Dekalb','IL','60115');
 INSERT "Orders" VALUES(359,'03/30/2021 00:00:00',6,'04/13/2021 00:00:00','04/11/2021 00:00:00','9667 Anderson Drive',NULL,'Dekalb','IL','60115');
 INSERT "Orders" VALUES(360,'03/31/2021 00:00:00',6,'04/14/2021 00:00:00','04/12/2021 00:00:00','9667 Anderson Drive',NULL,'Dekalb','IL','60115');
-Select count(orderid) from Orders;
+Select count(orderid) as orderCount from Orders;
 INSERT "OrderDetails" VALUES (1,66,17,3);
 INSERT "OrderDetails" VALUES (1,5,21.35,2);
 INSERT "OrderDetails" VALUES (1,1,18,1);
@@ -816,4 +823,5 @@ INSERT "OrderDetails" VALUES (357,4,22,1);
 INSERT "OrderDetails" VALUES (358,2,19,1);
 INSERT "OrderDetails" VALUES (359,6,25,1);
 INSERT "OrderDetails" VALUES (360,77,13,1);
-select count(orderId) from OrderDetails;
+select count(orderId) as orderDetailCount from OrderDetails;
+commit tran RetailerDataImport;
