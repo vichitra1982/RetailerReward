@@ -82,17 +82,69 @@ Group by cus.CustomerId, cus.CustomerName, cus.ContactName, cte.MonthStart, cte.
                     {
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
-                            Console.Write(reader.GetName(i) + "\t");
+                            if (i == 0)
+                                Console.Write("\t" + reader.GetName(i) + "\t");
+                            else
+                                Console.Write(reader.GetName(i) + "\t");
                         }
-                        Console.WriteLine();
+                        Console.WriteLine("\n\t_____________________________________________________________________________________________________\n");
+                        //Console.WriteLine();
                         while (reader.Read())
                         {
-
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
-                                Console.Write(reader.GetValue(i) + "\t");
+                                if (i == 0)
+                                    Console.Write("\t" + reader.GetValue(i) + "\t");
+                                else
+                                    Console.Write(reader.GetValue(i) + "\t");
                             }
-                            Console.WriteLine();
+                            Console.WriteLine("\n\t_____________________________________________________________________________________________________\n");
+                            int customerId = reader.GetInt32(0);
+                            DateTime startDate = reader.GetDateTime(3);
+                            DateTime endDate = reader.GetDateTime(4);
+                            string sqlText = @"select OrderDate, TotalPrice, (CASE WHEN (TotalPrice - 100) > 0 
+                                    THEN ((TotalPrice - 100) * 2) 
+                                    ELSE 0
+                                END +
+                                CASE WHEN (TotalPrice - 50) > 0 
+                                    THEN 50
+                                    ELSE 0
+                                END)
+                                as Rewards from Orders
+                                where CustomerId = @customerId
+                                and OrderDate between @startDate and @endDate";
+                            using (SqlCommand sqlCommand = new SqlCommand(sqlText, connection))
+                            {
+                                //sqlCommand.Parameters.Clear();
+                                sqlCommand.Parameters.Add(new SqlParameter("customerId", customerId));
+                                sqlCommand.Parameters.Add(new SqlParameter("startDate", startDate));
+                                sqlCommand.Parameters.Add(new SqlParameter("endDate", endDate));
+                                using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                                {
+                                    Console.Write("\t\t\t");
+                                    for (int i = 0; i < dataReader.FieldCount; i++)
+                                    {
+                                        if (i == 0)
+                                            Console.Write("\t" + dataReader.GetName(i) + "\t\t");
+                                        else
+                                            Console.Write(dataReader.GetName(i) + "\t");
+                                    }
+                                    Console.WriteLine("\n\t_____________________________________________________________________________________________________\n");
+                                    while (dataReader.Read())
+                                    {
+                                        Console.Write("\t\t\t");
+                                        for (int i = 0; i < dataReader.FieldCount; i++)
+                                        {
+                                            if (i == 0)
+                                                Console.Write("\t" + dataReader.GetValue(i) + "\t\t");
+                                            else
+                                                Console.Write(dataReader.GetValue(i) + "\t\t");
+                                        }
+                                        Console.WriteLine();
+                                    }
+                                    Console.WriteLine("\n\t_____________________________________________________________________________________________________\n");
+                                }
+                            }
                         }
                     }
                 }
