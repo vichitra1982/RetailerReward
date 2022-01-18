@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Imports\RetailerRewardsDataSetup.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\RetailerRewards.mdf" />
