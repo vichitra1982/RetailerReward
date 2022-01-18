@@ -11,6 +11,10 @@ Given a record of every transaction during a three month period, calculate the r
 • Make up a data set to best demonstrate your solution
 • Check solution into GitHub
 
-Since we are using a SQL Express database it doesn't connect to when placed in APP_DATA folder when it comes to console application, for this reason we will have to copy the "RetailRewards.mdf and .ldf files to "C:\DataBase" directory for this solution to work as expected.
+Since we are using a SQL Express database this app will not connect to APP_DATA folder when it comes to a console application, for this reason we will have to copy the "RetailRewards.mdf and .ldf files to "C:\DataBase" directory for this solution to work as expected.
 
 The DML and work out queries are placed in the "Database_Scripts" folder.  The "Insert Scripts for RetailRewards database.sql" was used to create the data for this solution.
+
+This project is heavily SQL dependent, means all the business logic has been handled in the SQL with the help of CTE (Common Table Expression)
+
+This app will create a UI which will display records hierarchically for each transactional records for a given month.  Since we have data for the year ranging from 1/1/2021 till 3/31/2021, for the query to show up results we have hardcoded a date in CTE.
