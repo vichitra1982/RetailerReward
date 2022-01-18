@@ -11,6 +11,8 @@ Given a record of every transaction during a three month period, calculate the r
 • Make up a data set to best demonstrate your solution
 • Check solution into GitHub
 
+FYI: This is a console application and I have tried my best to display the records as per the requirements.  I would not argue that this is the best solution, this solution might need some performance tuning and better UI design.
+
 This project requires .Net Framework 4.8 and the database 'C:\DATABASE\RETAILERREWARDS.MDF' used in this solution was created using a sql server version 904.  For better results please use Visual Studio 2022 community version in which this project was developed and tested.  
 
 The connectionstring for this project is placed in App.Config file under ConnectionStrings section.
