@@ -11,7 +11,7 @@ Given a record of every transaction during a three month period, calculate the r
 • Make up a data set to best demonstrate your solution
 • Check solution into GitHub
 
-Since we are using a SQL Express database this app will not connect to APP_DATA folder when it comes to a console application, for this reason we will have to copy the "RetailRewards.mdf and .ldf files to "C:\DataBase" directory for this solution to work as expected.
+Since we are using a SQL Express database this app will not connect to APP_DATA folder when it comes to a console application, for this reason we will have to copy the "RetailRewards.mdf and .ldf files from "APP_DATA" folder to your local directory, C:\DataBase" for this solution to work without any issues.
 
 The DML and work out queries are placed in the "Database_Scripts" folder.  The "Insert Scripts for RetailRewards database.sql" was used to create the data for this solution.
 
