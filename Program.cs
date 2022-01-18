@@ -10,6 +10,7 @@ namespace RetailerProgram
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Test Checkin");
         }
     }
 }
